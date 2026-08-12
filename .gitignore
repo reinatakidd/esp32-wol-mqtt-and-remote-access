@@ -1,0 +1,34 @@
+# Secrets & credentials
+secrets.h
+*.pem
+*.key
+*.crt
+.env
+.env.*
+
+# Arduino IDE
+*.ino.elf
+*.ino.bin
+*.ino.bootloader.bin
+*.ino.partitions.bin
+*.ino.map
+*.hex
+
+# Arduino build/cache files
+build/
+.cache/
+
+# PlatformIO
+.pio/
+.piolibdeps/
+.vscode/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temporary files
+*.log
+*.tmp
+*.bak
