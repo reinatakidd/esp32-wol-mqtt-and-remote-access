@@ -6,8 +6,6 @@ const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 const char* MQTT_USERNAME = "YOUR_MQTT_USERNAME";
 const char* MQTT_PASSWORD = "YOUR_MQTT_PASSWORD";
 
-// ============ VARIABLES ============
-
 const char* MQTT_SERVER = "YOUR_MQTT_SERVER_ADDRESS";
 const int MQTT_PORT = 8883;
 
