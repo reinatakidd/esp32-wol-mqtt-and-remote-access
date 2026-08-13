@@ -31,13 +31,9 @@ Once the PC is awake, you can optionally use a remote-access solution such as Ta
 ```text
 ┌─── MQTT ───► ESP32 ───► WoL ───► PC
 │
-Laptop
+Laptop (Moonlight)
 │
-└── Tailscale ───────────────────► PC
-│
-│ Sunshine
-▼
-Moonlight
+└── Tailscale ───────────────────► PC (Sunshine)
 ```
 
 You can therefore use only the **WoL portion** if all you need is remote power-on, or use the complete setup for **remote PC access** after the machine has been awakened.
