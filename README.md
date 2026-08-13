@@ -7,11 +7,11 @@ The project can be used as a **standalone MQTT-based Wake-on-LAN solution**, or 
 ### Wake-on-LAN
 
 ```text
-Phone / Server
+Phone / Laptop
       │
       │ MQTT
       ▼
-HiveMQ Cloud
+ HiveMQ Cloud
       │
       │ MQTT over TLS
       ▼
@@ -31,7 +31,7 @@ Once the PC is awake, you can optionally use a remote-access solution such as Ta
 ```text
 ┌─── MQTT ───► ESP32 ───► WoL ───► PC
 │
-Phone / Laptop ─────┤
+Laptop
 │
 └── Tailscale ───────────────────► PC
 │
