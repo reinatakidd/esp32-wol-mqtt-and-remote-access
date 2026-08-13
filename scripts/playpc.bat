@@ -14,20 +14,9 @@ echo          Remote PC Launcher
 echo ========================================
 echo.
 
-echo [1/3] Checking %PC%...
+echo [1/3] Sending wake command to %PC%...
 
-tailscale ping %PC% >nul 2>&1
-
-if not errorlevel 1 (
-    echo %PC% is already online.
-    goto PC_ONLINE
-)
-
-echo %PC% is offline.
-echo.
-echo Sending wake command...
-
-"%MQTT_EXE%" -o "%MQTT_CONFIG%" -t "home/pc/wake" -m "WAKE" -q 1
+"%MQTT_EXE%" -o "%MQTT_CONFIG%" -t "home/pc/wake" -m "WAKE"
 
 if errorlevel 1 (
     echo.
@@ -40,16 +29,24 @@ if errorlevel 1 (
 echo Wake command sent.
 echo.
 
-echo [2/3] Waiting for %PC% to come online...
+echo [2/3] Checking whether %PC% is online...
 
 set /a ATTEMPTS=0
 
 :WAIT_PC
+
 tailscale ping %PC% >nul 2>&1
 
-if not errorlevel 1 goto PC_ONLINE
+if not errorlevel 1 (
+    if %ATTEMPTS% EQU 0 (
+        goto PC_ALREADY_ONLINE
+    ) else (
+        goto PC_ONLINE
+    )
+)
 
 set /a ATTEMPTS+=1
+set /a ELAPSED=ATTEMPTS*2
 
 if %ATTEMPTS% GEQ 45 (
     echo.
@@ -59,9 +56,18 @@ if %ATTEMPTS% GEQ 45 (
     exit /b 1
 )
 
-echo Waiting...
+echo Waiting... %ELAPSED%s / 90s
 timeout /t 2 /nobreak >nul
 goto WAIT_PC
+
+
+:PC_ALREADY_ONLINE
+
+echo.
+echo %PC% is already online!
+echo.
+goto START_MOONLIGHT
+
 
 :PC_ONLINE
 
@@ -72,11 +78,14 @@ echo.
 echo Waiting for Windows and Sunshine...
 timeout /t 8 /nobreak >nul
 
+
+:START_MOONLIGHT
+
 echo.
 echo [3/3] Starting Moonlight...
 echo.
 
-start "" "%MOONLIGHT%" stream %PC% "%APP%" --1080 --fps 60 --bitrate 10000 --display-mode fullscreen --keep-awake
+start "" "%MOONLIGHT%" stream %PC% "%APP%" --1440 --fps 60 --bitrate 21000 --display-mode fullscreen --keep-awake
 
 echo Moonlight launched.
 echo.
